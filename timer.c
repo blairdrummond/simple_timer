@@ -89,38 +89,46 @@ main(int argc, char *argv[])
 	signal(SIGINT, bring_cursor_back);
 
 	/*  Arg parsing */
-	if (argc == 1) {
+	switch (argc) {
+	case 1:
 		/* No argument */
 		printf("usage: timer %%dh %%dm\n\nif one number is provided, it will be assumed to be minutes.");
 		return 0;
-	} else if (argc == 2) {
+
+	case 2:
 		/* Minute */
 		check = sscanf(argv[1], "%dm", &min);
 		if (check != 1) {
 			check = sscanf(argv[1], "%d", &min);
 		}
 		if (check != 1) {
-			fprintf(stderr, "%s", "invalid argument (1)");
+			fprintf(stderr, "invalid argument (1)");
 			return 1;
 		}
-	} else if (argc == 3) {
+		break;
+		
+	case 3:
 		check = sscanf(argv[1], "%dh", &hour);
 		if (check != 1) {
-			fprintf(stderr, "%s", "invalid argument (2)");
+			fprintf(stderr, "invalid argument (2)");
 			return 1;
 		}
 		check = sscanf(argv[2], "%dm", &min);
 		if (check != 1) {
-			fprintf(stderr, "%s", "invalid argument (3)");
+			fprintf(stderr, "invalid argument (3)");
 			return 1;
 		}
+		break;
+		
+	default:
+		fprintf(stderr, "Too many arguments!");
+		return 1;
 	}
-
 
 	/* Anything crazy happening? */
 	future = now + 3600 * hour + 60 * min;
 	if (future < now) {
-		fprintf(stderr, "%s", "Can't count into the past.");
+		fprintf(stderr, "Can't count into the past.");
 		return 1;
 	}
 
