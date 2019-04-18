@@ -42,7 +42,7 @@ void pretty_print(time_t diff) {
 		} else {
 				/* Fancy Printing */
 				for (i=0; i<ROW; i++) {
-	                 	strcpy(str[i],"");
+						strcpy(str[i],"");
 						if (h!=0) {
 								sig_digit(h, i, str[i]);
 								strcat(str[i], font_h[i]);
@@ -75,8 +75,8 @@ int main(int argc, char *argv[]){
 		time_t future;
 		int check;
 
-        /* Catch Ctrl-C and restore cursor */
-	    signal(SIGINT, bring_cursor_back);			 
+		/* Catch Ctrl-C and restore cursor */
+		signal(SIGINT, bring_cursor_back);
 
 		/*  Arg parsing */
 		if (argc == 1) {
