@@ -1,12 +1,7 @@
-/* A timer that counts actual seconds, not seconds running.
-   Meant to keep track 
+/* A timer that counts actual seconds, not seconds running. 
+
+   - Blair Drummond. 2019
 */
-
-
-
-
-
-
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -65,16 +60,10 @@ void pretty_print(time_t diff) {
 				printf("\033[2J");
 				for (i=0; i<ROW; i++)
 						printf("%s\n", str[i]);
-/*				
-				printf("\033[XA"); // Move up X lines;
-				printf("\033[XB"); // Move down X lines;
-				printf("\033[XC"); // Move right X column;
-				printf("\033[XD"); // Move left X column;
-				printf("\033[2J"); // Clear screen
-*/
 		}
 }
 
+/* Catch Ctrl-C and restore cursor */
 void bring_cursor_back() {
 		printf("\e[?25h");
 		exit(1);
@@ -86,6 +75,7 @@ int main(int argc, char *argv[]){
 		time_t future;
 		int check;
 
+        /* Catch Ctrl-C and restore cursor */
 	    signal(SIGINT, bring_cursor_back);			 
 
 		/*  Arg parsing */
@@ -124,8 +114,12 @@ int main(int argc, char *argv[]){
 				return 1;
 		}
 
+		/* Make Cursor Invisible */
 		printf("\e[?25l");
+
+		/* Flush the screen */
 		printf("\033[2J");
+
 		now = time(0);
 		while (future > (now=time(0))) {
 				pretty_print(future - now);
