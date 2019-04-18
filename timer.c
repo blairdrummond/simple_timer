@@ -16,7 +16,8 @@
 
 
 void
-sig_digit(int n, int i, char *s) {
+sig_digit(int n, int i, char *s)
+{
 	if (n >= 10)
 		sig_digit(n / 10, i, s);
 	strcat(s, font_numbers[n % 10][i]);
@@ -25,7 +26,8 @@ sig_digit(int n, int i, char *s) {
 
 
 void
-pretty_print(time_t diff) {
+pretty_print(time_t diff)
+{
 	int h = diff / 3600;
 	int m = (diff / 60) % 60;
 	int s = diff % 60;
@@ -68,14 +70,16 @@ pretty_print(time_t diff) {
 
 /* Catch Ctrl-C and restore cursor */
 void
-bring_cursor_back() {
+bring_cursor_back()
+{
 	printf("\e[?25h");
 	exit(1);
 }
 
 
 int
-main(int argc, char *argv[]){
+main(int argc, char *argv[])
+{
 	time_t now = time(0);
 	int hour, min;
 	time_t future;
