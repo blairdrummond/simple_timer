@@ -143,7 +143,11 @@ main(int argc, char *argv[])
 
 	while (future > (now = time(0))) {
 		pretty_print(future - now);
-		sleep (CHECK_INTERVAL);
+		sleep(CHECK_INTERVAL);
 	}
+
+	/* Bring back the cursor */
+	printf("\e[?25h");
+        sleep(1);
 	return 0;
 }
