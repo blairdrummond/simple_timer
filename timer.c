@@ -18,8 +18,10 @@
 void
 sig_digit(int n, int i, char *s)
 {
+	/* Print numbers one digit at a time */
 	if (n >= 10)
 		sig_digit(n / 10, i, s);
+
 	strcat(s, font_numbers[n % 10][i]);
 	strcat(s, " ");
 }
@@ -36,15 +38,14 @@ pretty_print(time_t diff)
 
 	if (BASIC) {
 		fflush(stdout);
-		if (h != 0 && m == 0) { 
+		if (h != 0 && m == 0)
 			printf("%d seconds remaining\r", s);
-		} else if (h == 0) {
+		else if (h == 0)
 			printf("%dm : %ds remaining\r", m, s);
-		} else {
+		else
 			printf("%dh : %dm : %ds remaining\r", h, m, s);
-		}
 	} else {
-		/* Fancy Printing */
+		/* Fancy Printing: create each line of text */
 		for (i = 0; i < ROW; i++) {
 			strcpy(str[i],"");
 			if (h != 0) {
@@ -61,7 +62,9 @@ pretty_print(time_t diff)
 			strcat(str[i], font_s[i]);
 		}
 
+		/* Clear Screen */
 		printf("\033[2J");
+		/* Draw each line */
 		for (i = 0; i < ROW; i++)
 			printf("%s\n", str[i]);
 	}
@@ -98,9 +101,9 @@ main(int argc, char *argv[])
 	case 2:
 		/* Minute */
 		check = sscanf(argv[1], "%dm", &min);
-		if (check != 1) {
+		if (check != 1)
 			check = sscanf(argv[1], "%d", &min);
-		}
+		
 		if (check != 1) {
 			fprintf(stderr, "invalid argument (1)");
 			return 1;
@@ -138,7 +141,6 @@ main(int argc, char *argv[])
 	/* Flush the screen */
 	printf("\033[2J");
 
-	now = time(0);
 	while (future > (now = time(0))) {
 		pretty_print(future - now);
 		sleep (CHECK_INTERVAL);
